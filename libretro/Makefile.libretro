@@ -270,7 +270,7 @@ endif
 
 # (armv7 a7, hard point, neon based) ### 
 # NESC, SNESC, C64 mini 
-else ifeq ($(platform), classic_armv7_a7)
+else ifneq ($(platform), classic_armv7_a7)
 	TARGET := $(TARGET_NAME)_libretro.so
 	fpic := -fPIC
 	CFLAGS += -Ofast \
@@ -299,7 +299,7 @@ else ifeq ($(platform), classic_armv7_a7)
 	endif
 # (armv8 a35, hard point, neon based) ###
 # PS Classic
-else ifeq ($(platform), classic_armv8_a35)
+else ifneq ($(platform), classic_armv8_a35)
   TARGET := $(TARGET_NAME)_libretro.so
   fpic := -fPIC
 	CFLAGS += -Ofast \
