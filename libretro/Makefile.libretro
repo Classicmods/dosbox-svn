@@ -78,17 +78,7 @@ endif
 ifeq ($(ARM_HARDFLOAT), 1)
 	COMMONFLAGS += -mfloat-abi=hard
 endif
-# defines for sbcs
-ifeq ($(target), cpi)
-	COMMONFLAGS += -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
-	WITH_DYNAREC = arm
-else ifeq ($(target), nintendoc)
-	COMMONFLAGS += -marm -mcpu=cortex-a7 -mfpu=neon-vfpv4 -mfloat-abi=hard
-	WITH_DYNAREC = arm
-else ifeq ($(target), classic_armv8_a35)
-        COMMONFLAGS += -marm -mcpu=cortex-a35 -mfpu=neon-fp-armv8 -mfloat-abi=hard
-        WITH_DYNAREC = arm
-endif
+
 # flags
 ifeq ($(platform), osx)
 	COMMONFLAGS += -DC_HAVE_MPROTECT="1" -DLIBCO_MPROTECT=1
@@ -264,13 +254,7 @@ else
 	LDFLAGS += -Wl,-Bdynamic
 	fpic = -fPIC
 endif
-# Classic Platforms ####################
-# Platform affix = classic_<ISA>_<µARCH>
-# Help at https://modmyclassic.com/comp
-
-# (armv7 a7, hard point, neon based) ### 
-# NESC, SNESC, C64 mini 
-else ifneq ($(platform), classic_armv7_a7)
+else ifeq ($(platform), classic_armv7_a7)
 	TARGET := $(TARGET_NAME)_libretro.so
 	fpic := -fPIC
 	CFLAGS += -Ofast \
@@ -299,7 +283,7 @@ else ifneq ($(platform), classic_armv7_a7)
 	endif
 # (armv8 a35, hard point, neon based) ###
 # PS Classic
-else ifneq ($(platform), classic_armv8_a35)
+else ifeq ($(platform), classic_armv8_a35)
   TARGET := $(TARGET_NAME)_libretro.so
   fpic := -fPIC
 	CFLAGS += -Ofast \
