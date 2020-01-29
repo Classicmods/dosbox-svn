@@ -235,7 +235,7 @@ else ifeq ($(platform), classic_armv7_a7)
 	  CFLAGS += -march=armv7ve
 	  # If gcc is 5.0 or later
 	  ifeq ($(shell echo `$(CC) -dumpversion` ">= 5" | bc -l), 1)
-	    LDFLAGS += -static-libgcc -static-libstdc++ -shared -Wl,--version-script=libretro/link.T
+	    LDFLAGS += -static-libgcc -static-libstdc++ -shared -Wl,--version-script=link.T
 	  endif
 	endif
 # (armv8 a35, hard point, neon based) ###
@@ -259,8 +259,7 @@ else ifeq ($(platform), classic_armv8_a35)
 	BUILTIN_GPU = neon
 	WITH_DYNAREC = arm
 	CFLAGS += -march=armv8-a
-	LDFLAGS += -static-libgcc -static-libstdc++ -shared -Wl,--version-script=libretro/link.T
-endif
+	LDFLAGS += -static-libgcc -static-libstdc++ -shared -Wl,--version-script=link.T
 else ifeq ($(platform), xbox1_msvc2003)
 	CFLAGS += -D__WIN32__
 	CXXFLAGS += -D__WIN32__
@@ -304,8 +303,7 @@ else
 	LDFLAGS += -Wl,-Bdynamic
 	fpic = -fPIC
 endif
-
-else ifneq 
+ 
 ifeq ($(DEBUG), 1)
 	COMMONFLAGS += -O0 -g
 else
